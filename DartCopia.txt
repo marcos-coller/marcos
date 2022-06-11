@@ -1,0 +1,9 @@
+https://meet.google.com/xxw-vjuo-zzi
+
+modelo celular android 11
+modelo LM-k510BMW
+Fazendo um projeto no terminal
+
+C:\flutter create --org "br.com.coller" abelhas_app
+C:\code .
+c:\dart abelhas_app

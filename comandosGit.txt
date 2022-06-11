@@ -1,0 +1,177 @@
+##Comandos DDL(Data Definition Language)
+show databases;
+create database <nome da tabela>cadastro
+default character set utf8
+default collate utf8_general_ci;
+
+use <nome da tabela>cadastro;
+
+drop database cadastro;
+
+##Criando uma tabela pessoas
+
+create table pessoas(
+id int not null auto_increment,
+nome varchar(30) not null,
+nascimento date,
+sexo enum('M','F'),
+peso decimal(5,2),
+altura decimal(3,2),
+nacionalidade varchar(20) default 'Brasil',
+primary key(id)
+)default charset = utf8;
+
+################################### Manual Git ##########################
+
+## Comandos para tabelas
+
+describe <nome da tabela>; ## Mostra a estrutura da tabela
+show tables; apresenta as tabelas
+drop table <nome da tabela>;
+
+##DML (Data Manipulation Language)
+## Comando de inserção de dados na tabela pessoas
+
+insert into pessoas
+(id,nome,nascimento,sexo,peso,altura,nacionalidade)
+values
+(default,'Riquelme','1984-01-02','M','72.5','1.72','Brasil');  
+
+insert into pessoas
+values
+(default,'Larissa','1980-01-28','F','72.5','1.72','Brasil');
+
+insert into pessoas
+values
+(default,'Samantha','1980-01-28','F','72.5','1.72','Brasil'),
+(default,'João Pedro','1980-01-28','M','72.5','1.72','Brasil'),
+(default,'Bruna','1980-01-28','F','72.5','1.72','Brasil');
+
+
+##Criando a tabela cursos
+
+create table if not exists cursos
+(
+nome varchar(30) not null unique,
+descricao text,
+carga int unsigned,
+totaulas int unsigned,
+ano year default '2022'
+) default charset=utf8;
+
+##Acrescentando a coluna idcurso
+alter table cursos add column idcurso int first;
+
+alter table cursos
+add primary key(idcurso);
+
+alter table curso drop nome; 
+
+alter table curso add nome varchar(30);
+
+##Comando para selecionar os dados da tabela
+select *from pessoas; 
+
+#07 Manipulando registro, linhas ou tuplas
+
+insert into cursos values
+('1', 'HTML4', 'Curso de HTML5', '40', '37', '2014'),
+('2', 'Algoritmos', 'Lógica de Progamação', '20', '15', '2014'),
+('3', 'Photoshop', 'Dicas de Photoshop CC', '10', '8', '2014'),
+('4', 'PGP', 'Curso de PHP para iniciantes', '40', '20', '2010'),
+('5', 'Jarva', 'Introdução à Linguagem Java', '10', '29', '2000'),
+('6', 'MySQL', 'Banco de Dados MySQL', '30', '15', '2016'),
+('7', 'Word', 'Curso completo de Word', '40', '30', '2016'),
+('8', 'Sapateado', 'Danças Rítmicas', '40', '37', '2018'),
+('9', 'Cozinha Árabe', 'Aprender a fazer Kibe', '40', '30', '2018'),
+('10', 'YouTuber', 'Gerar polêmica e ganhar inscritos', '5', '2', '2018');
+
+
+#07-2 Manipulando registro, linhas ou tuplas
+
+update cursos set nome='HTML5' where idcurso='1';
+
+update cursos set nome='PHP', ano='2015' where idcurso='4';
+
+update cursos set nome='Java', carga='40', 
+ano='2015' where idcurso='5' limit 1;
+
+##Apagando linhas
+
+delete from cursos where idcursos='8';
+
+delete from cursos where ano='2050'
+limit 2;
+
+##Removendo todos os registros(DML) 
+truncate table cursos;
+truncate cursos;
+
+## Comando select (DML - linguagem de manipulação de dados)
+## Lista por ordem de nome
+select * from cursos order by nome desc;
+select * from cursos order by nome asc;
+
+## Listar apenas umas colunas
+select nome,carga,ano from cursos order by nome;
+
+##Lista ordenado por ano e nome colunas
+select nome,carga,ano from cursos order by ano,nome;
+
+##Selecionando as linhas
+# Quais os cursos lançados em 2016
+
+select * from cursos where ano=2016 order by nome;
+
+select ano,descricao from cursos where ano <= 2015 order by ano;
+##Diferente
+
+select ano,descricao from cursos where ano <> 2015 order by ano;
+
+##Intervalo entre 2014 a 2016
+
+select ano,descricao from cursos where ano between 2014 and 2016 order by ano desc,nome;
+
+##Especifica intermediário
+
+select ano,descricao from cursos where ano in (2014, 2016) order by ano desc,nome;
+
+##Mostrar todos os cursos com carga maior que 35 e totalaulas menor que 30;
+
+select * from cursos where carga > 35 and totaulas < 30 order by ano desc,nome;
+
+##Selecionar todos os crusos que comecem com a letra P
+select * from cursos where nome like 'P%';
+select * from cursos where nome like 'p%';
+select * from cursos where nome like '%a';
+select * from cursos where nome like 'ph%p';
+
+##Selecionando entradas distintas->(Uma ocorrência de cada entrada )
+select distinct ano from cursos;
+select distinct carga from cursos;
+
+##Função de agregação
+select count(*) from cursos where carga < 40;
+
+#Máximo
+select max(totaulas) from cursos;
+select max(totaulas) from cursos where ano = '2016';
+select nome,max(totaulas) from cursos;
+
+#Mínimo
+select min(totaulas) from cursos where ano = '2016';
+
+#Soma
+
+select sum(totaulas) from cursos;
+select sum(totaulas) from cursos where ano='2016';
+
+#Média
+select avg(totaulas) from cursos;
+
+
+
+
+
+
+
